@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ALTRAFLOAT.Views.AgentDashboardPage"
+             BackgroundColor="#443123"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="AltraBrown">#443123</Color>
+            <Color x:Key="AltraBrownDark">#3D2B20</Color>
+            <Color x:Key="AltraYellow">#FFC400</Color>
+            <Color x:Key="AltraYellowDark">#E6B000</Color>
+            <Color x:Key="AltraCard">#514034</Color>
+            <Color x:Key="AltraCardLight">#F8F5F2</Color>
+            <Color x:Key="AltraWhite">#FFFFFF</Color>
+            <Color x:Key="AltraMuted">#C7BDB5</Color>
+            <Color x:Key="AltraStroke">#665448</Color>
+            <Color x:Key="AltraDarkText">#493629</Color>
+            <Color x:Key="AltraFieldStroke">#E5DFD9</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16,14,16,22" Spacing="14">
+                <!-- Brand header -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Image Source="altrafloat_logo.png" WidthRequest="48" HeightRequest="48"
+                               Aspect="AspectFit"/>
+                        <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                            <Label FontSize="25" FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Altra" TextColor="White"/>
+                                        <Span Text="float" TextColor="{StaticResource AltraYellow}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="Agent &amp; Liquidity Officer Communication"
+                                   FontSize="9" TextColor="{StaticResource AltraMuted}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                    <Grid Grid.Column="1" VerticalOptions="Center" ColumnDefinitions="Auto,Auto"
+                          ColumnSpacing="6">
+                        <Image Source="notification_bell.svg" WidthRequest="30" HeightRequest="30"
+                               Aspect="AspectFit" VerticalOptions="Center"/>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource AltraYellow}"
+                                StrokeThickness="0" WidthRequest="28" HeightRequest="28"
+                                StrokeShape="RoundRectangle 14">
+                            <Label Text="3" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{StaticResource AltraDarkText}"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+                <!-- Agent profile -->
+                <Border BackgroundColor="{StaticResource AltraCard}" Stroke="{StaticResource AltraStroke}"
+                        StrokeThickness="1" StrokeShape="RoundRectangle 22" Padding="14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Border BackgroundColor="{StaticResource AltraYellow}" StrokeThickness="0"
+                                WidthRequest="58" HeightRequest="58"
+                                StrokeShape="RoundRectangle 29" VerticalOptions="Center">
+                            <Label Text="JD" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource AltraDarkText}"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="Good morning," FontSize="13" TextColor="{StaticResource AltraMuted}"/>
+                            <Label Text="John Doe" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                            <Label Text="Agent ID: G1001" FontSize="13" TextColor="{StaticResource AltraMuted}"/>
+                            <Label Text="Main Agent" FontSize="13" TextColor="{StaticResource AltraYellow}"/>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource AltraYellow}"
+                                StrokeThickness="0" StrokeShape="RoundRectangle 16"
+                                Padding="10,7" VerticalOptions="Center">
+                            <Label Text="AGENT" FontSize="12" FontAttributes="Bold"
+                                   TextColor="{StaticResource AltraDarkText}"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Available LO banner -->
+                <Border BackgroundColor="{StaticResource AltraYellow}" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 22" Padding="18,16">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Available Liquidity Officers" FontSize="18"
+                                   FontAttributes="Bold" TextColor="{StaticResource AltraDarkText}"/>
+                            <Label Text="5  •  Online now" FontSize="16"
+                                   FontAttributes="Bold" TextColor="#5C4A00"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="1" Text="›" FontSize="34"
+                               TextColor="{StaticResource AltraDarkText}" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- New Request -->
+                <Border BackgroundColor="White" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 16" Padding="16">
+                    <Label Text="New Request  →" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource AltraDarkText}" HorizontalOptions="Center"/>
+                </Border>
+
+                <!-- Quick actions -->
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+                    <Border BackgroundColor="{StaticResource AltraCard}" Stroke="{StaticResource AltraStroke}"
+                            StrokeThickness="1" StrokeShape="RoundRectangle 15" Padding="8">
+                        <Label Text="Chat  2" FontSize="13" FontAttributes="Bold" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource AltraCard}"
+                            Stroke="{StaticResource AltraStroke}" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 15" Padding="8">
+                        <Label Text="History" FontSize="13" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Border Grid.Column="2" BackgroundColor="{StaticResource AltraCard}"
+                            Stroke="{StaticResource AltraStroke}" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 15" Padding="8">
+                        <Label Text="Profile" FontSize="13" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Border Grid.Column="3" BackgroundColor="{StaticResource AltraCard}"
+                            Stroke="{StaticResource AltraStroke}" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 15" Padding="8">
+                        <Label Text="Settings" FontSize="12" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- Available officers -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6,0,0">
+                    <Label Text="Available LOs" FontSize="19" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="1" Text="View All  ›" FontSize="14"
+                           TextColor="{StaticResource AltraYellow}" VerticalOptions="Center"/>
+                </Grid>
+
+                <VerticalStackLayout Spacing="9">
+                    <Border BackgroundColor="{StaticResource AltraCard}" Stroke="{StaticResource AltraStroke}"
+                            StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="12">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="9">
+                            <Border BackgroundColor="{StaticResource AltraYellow}" StrokeThickness="0"
+                                    WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 24">
+                                <Label Text="SJ" FontSize="17" FontAttributes="Bold"
+                                       TextColor="{StaticResource AltraDarkText}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="Sarah Johnson" FontSize="16" FontAttributes="Bold" TextColor="White"/>
+                                    <Border BackgroundColor="#F8F5F2" StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 12" Padding="7,2">
+                                        <Label Text="L.O." FontSize="11" FontAttributes="Bold"
+                                               TextColor="{StaticResource AltraDarkText}"/>
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Label Text="• Liquidity Officer" FontSize="13" TextColor="{StaticResource AltraMuted}"/>
+                            </VerticalStackLayout>
+                            <Button Grid.Column="2" Text="Request" BackgroundColor="{StaticResource AltraYellow}"
+                                    TextColor="{StaticResource AltraDarkText}" FontAttributes="Bold"
+                                    FontSize="12" CornerRadius="10" HeightRequest="42" Padding="10,0"/>
+                        </Grid>
+                    </Border>
+                    <Border BackgroundColor="{StaticResource AltraCard}" Stroke="{StaticResource AltraStroke}"
+                            StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="12">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="9">
+                            <Border BackgroundColor="{StaticResource AltraYellow}" StrokeThickness="0"
+                                    WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 24">
+                                <Label Text="MB" FontSize="17" FontAttributes="Bold"
+                                       TextColor="{StaticResource AltraDarkText}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="Michael Brown" FontSize="16" FontAttributes="Bold" TextColor="White"/>
+                                    <Border BackgroundColor="#F8F5F2" StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 12" Padding="7,2">
+                                        <Label Text="L.O." FontSize="11" FontAttributes="Bold"
+                                               TextColor="{StaticResource AltraDarkText}"/>
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Label Text="• Liquidity Officer" FontSize="13" TextColor="{StaticResource AltraMuted}"/>
+                            </VerticalStackLayout>
+                            <Button Grid.Column="2" Text="Request" BackgroundColor="{StaticResource AltraYellow}"
+                                    TextColor="{StaticResource AltraDarkText}" FontAttributes="Bold"
+                                    FontSize="12" CornerRadius="10" HeightRequest="42" Padding="10,0"/>
+                        </Grid>
+                    </Border>
+                    <Border BackgroundColor="{StaticResource AltraCard}" Stroke="{StaticResource AltraStroke}"
+                            StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="12">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="9">
+                            <Border BackgroundColor="{StaticResource AltraYellow}" StrokeThickness="0"
+                                    WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 24">
+                                <Label Text="MW" FontSize="17" FontAttributes="Bold"
+                                       TextColor="{StaticResource AltraDarkText}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="Mary Wilson" FontSize="16" FontAttributes="Bold" TextColor="White"/>
+                                    <Border BackgroundColor="#F8F5F2" StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 12" Padding="7,2">
+                                        <Label Text="L.O." FontSize="11" FontAttributes="Bold"
+                                               TextColor="{StaticResource AltraDarkText}"/>
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Label Text="• Liquidity Officer" FontSize="13" TextColor="{StaticResource AltraMuted}"/>
+                            </VerticalStackLayout>
+                            <Button Grid.Column="2" Text="Request" BackgroundColor="{StaticResource AltraYellow}"
+                                    TextColor="{StaticResource AltraDarkText}" FontAttributes="Bold"
+                                    FontSize="12" CornerRadius="10" HeightRequest="42" Padding="10,0"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Request overview -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6,0,0">
+                    <Label Text="Request Overview" FontSize="19" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="1" Text="View Details  ›" FontSize="14"
+                           TextColor="{StaticResource AltraYellow}" VerticalOptions="Center"/>
+                </Grid>
+                <Border BackgroundColor="{StaticResource AltraCard}" Stroke="{StaticResource AltraStroke}"
+                        StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="14">
+                    <Grid ColumnDefinitions="*,1,*,1,*">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                            <Label Text="2" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource AltraYellow}"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Pending" FontSize="13" TextColor="{StaticResource AltraMuted}"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <BoxView Grid.Column="1" Color="{StaticResource AltraStroke}" WidthRequest="1"
+                                 HeightRequest="50" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                            <Label Text="8" FontSize="28" FontAttributes="Bold" TextColor="White"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Accepted" FontSize="13" TextColor="{StaticResource AltraMuted}"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <BoxView Grid.Column="3" Color="{StaticResource AltraStroke}" WidthRequest="1"
+                                 HeightRequest="50" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="2">
+                            <Label Text="1" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource AltraMuted}"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Declined" FontSize="13" TextColor="{StaticResource AltraMuted}"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Fixed bottom navigation -->
+        <Border Grid.Row="1" BackgroundColor="{StaticResource AltraBrownDark}"
+                StrokeThickness="0" Padding="0,10,0,14">
+            <Grid ColumnDefinitions="*,*,*,*">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                    <BoxView Color="{StaticResource AltraYellow}" HeightRequest="3" WidthRequest="34"
+                             HorizontalOptions="Center" Margin="0,0,0,4"/>
+                    <Label Text="Home" FontSize="13" TextColor="{StaticResource AltraYellow}"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
+                    <Label Text="Requests" FontSize="13" TextColor="{StaticResource AltraMuted}"
+                           HorizontalOptions="Center"/>
+                    <Border BackgroundColor="{StaticResource AltraYellow}" StrokeThickness="0"
+                            WidthRequest="22" HeightRequest="22" StrokeShape="RoundRectangle 11"
+                            HorizontalOptions="Center">
+                        <Label Text="2" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource AltraDarkText}"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                    <Label Text="Chat" FontSize="13" TextColor="{StaticResource AltraMuted}"
+                           HorizontalOptions="Center"/>
+                    <Border BackgroundColor="{StaticResource AltraYellow}" StrokeThickness="0"
+                            WidthRequest="22" HeightRequest="22" StrokeShape="RoundRectangle 11"
+                            HorizontalOptions="Center">
+                        <Label Text="2" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource AltraDarkText}"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="2">
+                    <Label Text="More" FontSize="13" TextColor="{StaticResource AltraMuted}"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
