@@ -60,14 +60,18 @@
                         <Border BackgroundColor="#F0EDE9" StrokeThickness="0"
                                 StrokeShape="RoundRectangle 24" Padding="4" Margin="0,6,0,2">
                             <Grid ColumnDefinitions="*,*">
-                                <Border Grid.Column="0" BackgroundColor="{StaticResource AltraBrown}"
-                                        StrokeThickness="0" StrokeShape="RoundRectangle 20" Padding="10,10">
-                                    <Label Text="Agent" TextColor="{StaticResource AltraYellow}"
-                                           FontAttributes="Bold" HorizontalOptions="Center"/>
-                                </Border>
-                                <Label Grid.Column="1" Text="Liquidity Officer"
-                                       TextColor="#5C534C" HorizontalOptions="Center"
-                                       VerticalOptions="Center" FontSize="13"/>
+                                <Button Grid.Column="0" Text="Agent Login"
+                                        BackgroundColor="{StaticResource AltraBrown}"
+                                        TextColor="{StaticResource AltraYellow}"
+                                        FontAttributes="Bold" FontSize="12"
+                                        CornerRadius="20" HeightRequest="44"
+                                        Clicked="OnAgentTabClicked"/>
+                                <Button Grid.Column="1" Text="Liquidity Officer Login"
+                                        BackgroundColor="Transparent"
+                                        TextColor="#5C534C"
+                                        FontAttributes="Bold" FontSize="12"
+                                        CornerRadius="20" HeightRequest="44"
+                                        Clicked="OnLiquidityTabClicked"/>
                             </Grid>
                         </Border>
 
