@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ALTRAFLOAT.Views.LoginPreviewPage"
+             BackgroundColor="#443123"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*"
+          BackgroundColor="#443123">
+
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,*"
+              Padding="8"
+              ColumnSpacing="8"
+              BackgroundColor="#3D2B20">
+
+            <Button x:Name="AgentTab"
+                    Grid.Column="0"
+                    Text="Agent Login"
+                    BackgroundColor="#FFC400"
+                    TextColor="#443123"
+                    FontAttributes="Bold"
+                    FontSize="13"
+                    CornerRadius="10"
+                    HeightRequest="48"
+                    Clicked="OnAgentTabClicked"/>
+
+            <Button x:Name="LiquidityTab"
+                    Grid.Column="1"
+                    Text="Liquidity Officer"
+                    BackgroundColor="#514034"
+                    TextColor="#FFFFFF"
+                    FontAttributes="Bold"
+                    FontSize="13"
+                    CornerRadius="10"
+                    HeightRequest="48"
+                    Clicked="OnLiquidityTabClicked"/>
+        </Grid>
+
+        <ContentView x:Name="LoginHost"
+                     Grid.Row="1"/>
+    </Grid>
+</ContentPage>

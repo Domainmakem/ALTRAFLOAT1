@@ -7,8 +7,8 @@
        FlyoutBehavior="Disabled">
 
     <ShellContent
-        Title="Dashboards"
-        Route="DashboardPreview"
-        ContentTemplate="{DataTemplate views:DashboardPreviewPage}"/>
+        Title="Login"
+        Route="LoginPreview"
+        ContentTemplate="{DataTemplate views:LoginPreviewPage}"/>
 
 </Shell>

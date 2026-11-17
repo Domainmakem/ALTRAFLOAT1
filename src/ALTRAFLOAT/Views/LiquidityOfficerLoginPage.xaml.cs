@@ -6,4 +6,9 @@ public partial class LiquidityOfficerLoginPage : ContentPage
     {
         InitializeComponent();
     }
+
+    private async void OnLoginClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(LiquidityOfficerDashboardPage));
+    }
 }
