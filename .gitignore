@@ -17,3 +17,5 @@ local.properties
 .DS_Store
 *.swp
 TestResults/
+
+**/google-services.json

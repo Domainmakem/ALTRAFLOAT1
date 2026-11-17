@@ -22,6 +22,33 @@ jobs:
       - name: Install MAUI Android workload
         run: dotnet workload install maui-android
 
+      - name: Create and verify Firebase configuration
+        env:
+          FIREBASE_GOOGLE_SERVICES_JSON: ${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+          raw = os.environ.get("FIREBASE_GOOGLE_SERVICES_JSON")
+          if not raw:
+              raise SystemExit("Firebase GitHub secret is missing.")
+
+          data = json.loads(raw)
+          project = data.get("project_info", {}).get("project_id")
+          clients = data.get("client", [])
+          package = clients[0].get("client_info", {}).get("android_client_info", {}).get("package_name") if clients else None
+
+          if project != "altrafloat-473c3":
+              raise SystemExit("Firebase project ID does not match.")
+          if package != "com.domainmakem.altrafloat":
+              raise SystemExit("Android package name does not match.")
+
+          Path("src/ALTRAFLOAT/google-services.json").write_text(raw)
+          print("Firebase configuration created and verified.")
+          PYTHON
+
       - name: Restore
         run: dotnet restore ALTRAFLOAT.sln
 
@@ -30,6 +57,10 @@ jobs:
 
       - name: Publish APK
         run: dotnet publish src/ALTRAFLOAT/ALTRAFLOAT.csproj -c Release -f net10.0-android --no-restore -p:AndroidPackageFormats=apk
+
+      - name: Remove temporary Firebase configuration
+        if: always()
+        run: rm -f src/ALTRAFLOAT/google-services.json
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
