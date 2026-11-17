@@ -9,7 +9,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <ApplicationTitle>ALTRAFLOAT</ApplicationTitle>
+    <ApplicationTitle>Altrafloat</ApplicationTitle>
     <ApplicationId>com.domainmakem.altrafloat</ApplicationId>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#1B4D3E" />
+    <MauiIcon Include="Resources\AppIcon\appicon.png" />
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1B4D3E" BaseSize="128,128" />
   </ItemGroup>
 
