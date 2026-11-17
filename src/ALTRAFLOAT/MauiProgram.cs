@@ -13,6 +13,12 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddSingleton<HomePage>();
+
+        builder.Services.AddTransient<AgentLoginPage>();
+        builder.Services.AddTransient<LiquidityOfficerLoginPage>();
+        builder.Services.AddTransient<AgentDashboardPage>();
+        builder.Services.AddTransient<LiquidityOfficerDashboardPage>();
+
         builder.Services.AddSingleton<AppShell>();
 
 #if DEBUG
