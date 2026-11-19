@@ -1,0 +1,161 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function validCommonProfile(uid) {
+      return signedIn()
+        && request.resource.data.uid == uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.username is string
+        && request.resource.data.username.size() > 0
+        && request.resource.data.createdAt == request.time;
+    }
+
+    function validAgentProfile(uid) {
+      return validCommonProfile(uid)
+        && request.resource.data.keys().hasAll([
+          'uid', 'username', 'email', 'role',
+          'accountStatus', 'createdAt',
+          'agentId', 'agentCategory'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'uid', 'username', 'email', 'role',
+          'accountStatus', 'createdAt',
+          'agentId', 'agentCategory'
+        ])
+        && request.resource.data.role == 'agent'
+        && request.resource.data.accountStatus == 'active'
+        && request.resource.data.agentId.matches(
+          '^[A-Z][A-Z0-9_-]*$'
+        )
+        && request.resource.data.agentCategory in [
+          'Main Agent',
+          'Moblie Money Agent',
+          'High Agents'
+        ]
+        && existsAfter(
+          /databases/$(database)/documents/agentIds/$(request.resource.data.agentId)
+        )
+        && getAfter(
+          /databases/$(database)/documents/agentIds/$(request.resource.data.agentId)
+        ).data.uid == uid;
+    }
+
+    function validLOProfile(uid) {
+      return validCommonProfile(uid)
+        && request.resource.data.email.matches(
+          '^[a-z][a-z0-9._%+-]*@gmail[.]com$'
+        )
+        && request.resource.data.keys().hasAll([
+          'uid', 'username', 'email', 'role',
+          'accountStatus', 'createdAt',
+          'loId', 'approvalStatus'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'uid', 'username', 'email', 'role',
+          'accountStatus', 'createdAt',
+          'loId', 'approvalStatus'
+        ])
+        && request.resource.data.role == 'liquidityOfficer'
+        && request.resource.data.accountStatus == 'pending'
+        && request.resource.data.approvalStatus == 'pending'
+        && request.resource.data.loId.matches(
+          '^[SC][0-9]+$'
+        )
+        && existsAfter(
+          /databases/$(database)/documents/liquidityOfficerIds/$(request.resource.data.loId)
+        )
+        && getAfter(
+          /databases/$(database)/documents/liquidityOfficerIds/$(request.resource.data.loId)
+        ).data.uid == uid;
+    }
+
+    match /users/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      allow list: if false;
+
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && (validAgentProfile(uid) || validLOProfile(uid));
+
+      allow update, delete: if false;
+    }
+
+    match /agentIds/{agentId} {
+      allow read: if false;
+
+      allow create: if signedIn()
+        && agentId.matches('^[A-Z][A-Z0-9_-]*$')
+        && request.resource.data.keys().hasAll([
+          'uid', 'reserved', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'uid', 'reserved', 'createdAt'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.reserved == true
+        && request.resource.data.createdAt == request.time
+        && existsAfter(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        )
+        && getAfter(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        ).data.agentId == agentId;
+
+      allow update, delete: if false;
+    }
+
+    match /liquidityOfficerIds/{loId} {
+      allow read: if false;
+
+      allow create: if signedIn()
+        && loId.matches('^[SC][0-9]+$')
+        && request.resource.data.keys().hasAll([
+          'uid', 'reserved', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'uid', 'reserved', 'createdAt'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.reserved == true
+        && request.resource.data.createdAt == request.time
+        && existsAfter(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        )
+        && getAfter(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        ).data.loId == loId;
+
+      allow update, delete: if false;
+    }
+
+    match /liquidityOfficerDirectory/{loUid} {
+      allow get: if signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'agent'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.accountStatus == 'active'
+        && exists(/databases/$(database)/documents/users/$(loUid))
+        && get(/databases/$(database)/documents/users/$(loUid)).data.role == 'liquidityOfficer'
+        && get(/databases/$(database)/documents/users/$(loUid)).data.approvalStatus == 'approved'
+        && get(/databases/$(database)/documents/users/$(loUid)).data.accountStatus == 'active'
+        && resource.data.status == 'active';
+
+      allow list: if signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'agent'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.accountStatus == 'active'
+        && resource.data.status == 'active';
+
+      allow create, update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
