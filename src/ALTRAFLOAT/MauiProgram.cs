@@ -2,6 +2,7 @@ using ALTRAFLOAT.ViewModels;
 using ALTRAFLOAT.Views;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.LifecycleEvents;
 using Plugin.Firebase.Bundled.Shared;
 using Plugin.Firebase.Bundled.Platforms.Android;
 
