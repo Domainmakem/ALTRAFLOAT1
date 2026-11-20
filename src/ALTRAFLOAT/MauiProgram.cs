@@ -1,6 +1,9 @@
 using ALTRAFLOAT.ViewModels;
 using ALTRAFLOAT.Views;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.ApplicationModel;
+using Plugin.Firebase.Bundled.Shared;
+using Plugin.Firebase.Bundled.Platforms.Android;
 
 namespace ALTRAFLOAT;
 
@@ -10,6 +13,30 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>();
+
+        var firebaseSettings = new CrossFirebaseSettings(
+            isAnalyticsEnabled: false,
+            isAuthEnabled: true,
+            isCloudMessagingEnabled: false,
+            isDynamicLinksEnabled: false,
+            isFirestoreEnabled: true,
+            isFunctionsEnabled: false,
+            isRemoteConfigEnabled: false,
+            isStorageEnabled: false
+        );
+
+        builder.ConfigureLifecycleEvents(events =>
+        {
+#if ANDROID
+            events.AddAndroid(android => android.OnCreate((activity, _) =>
+                CrossFirebase.Initialize(
+                    activity,
+                    () => Platform.CurrentActivity,
+                    firebaseSettings
+                )
+            ));
+#endif
+        });
 
         builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddSingleton<HomePage>();
