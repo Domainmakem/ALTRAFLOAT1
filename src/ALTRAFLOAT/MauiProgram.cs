@@ -1,3 +1,4 @@
+using ALTRAFLOAT.Services;
 using ALTRAFLOAT.ViewModels;
 using ALTRAFLOAT.Views;
 using Microsoft.Extensions.Logging;
@@ -39,6 +40,7 @@ public static class MauiProgram
 #endif
         });
 
+        builder.Services.AddSingleton<FirebaseAuthenticationService>();
         builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddSingleton<HomePage>();
 
