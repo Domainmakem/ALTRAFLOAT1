@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ALTRAFLOAT.Views.LiquidityOfficerCreateAccountPage"
+             BackgroundColor="#443123"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="24,34,24,28" Spacing="18">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Image Source="altrafloat_logo.png" WidthRequest="58" HeightRequest="58" Aspect="AspectFit"/>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                    <Label Text="Altrafloat" FontSize="27" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="Liquidity Officer Registration" FontSize="12" TextColor="#C7BDB5"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <Border BackgroundColor="White" StrokeThickness="0"
+                    StrokeShape="RoundRectangle 24" Padding="24" Margin="0,18,0,0">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Create Liquidity Officer Account" FontSize="22"
+                           FontAttributes="Bold" TextColor="#493629" HorizontalOptions="Center"/>
+                    <Label Text="Use your Gmail address and assigned LO ID."
+                           FontSize="13" TextColor="#8A7F76" HorizontalOptions="Center"/>
+
+                    <Entry x:Name="EmailEntry" Placeholder="Gmail address" Keyboard="Email"
+                           TextColor="#493629" PlaceholderColor="#9A9088"/>
+                    <Entry x:Name="UsernameEntry" Placeholder="User name"
+                           TextColor="#493629" PlaceholderColor="#9A9088"/>
+                    <Entry x:Name="LiquidityOfficerIdEntry" Placeholder="LO ID (example: S1001)"
+                           TextColor="#493629" PlaceholderColor="#9A9088"/>
+                    <Entry x:Name="PasswordEntry" Placeholder="Password (at least 6 characters)"
+                           IsPassword="True" TextColor="#493629" PlaceholderColor="#9A9088"/>
+
+                    <Border BackgroundColor="#F8F5F2" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10" Padding="12">
+                        <Label Text="Your account will remain pending until an administrator approves it."
+                               TextColor="#493629" FontSize="12"/>
+                    </Border>
+
+                    <Button x:Name="CreateButton" Text="Create Account"
+                            Clicked="OnCreateAccountClicked"
+                            BackgroundColor="#443123" TextColor="#FFC400"
+                            FontAttributes="Bold" FontSize="16"
+                            HeightRequest="52" CornerRadius="14"/>
+                    <Button Text="Back to Liquidity Officer Login" Clicked="OnBackClicked"
+                            BackgroundColor="Transparent" TextColor="#493629"/>
+                </VerticalStackLayout>
+            </Border>
+            <Label Text="Secure • Reliable • Altrafloat" TextColor="#C7BDB5"
+                   HorizontalOptions="Center" FontSize="12"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

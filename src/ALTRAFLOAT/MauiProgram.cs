@@ -44,6 +44,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddSingleton<HomePage>();
 
+        builder.Services.AddTransient<LoginPreviewPage>();
         builder.Services.AddTransient<AgentLoginPage>();
         builder.Services.AddTransient<LiquidityOfficerLoginPage>();
         builder.Services.AddTransient<AgentDashboardPage>();
