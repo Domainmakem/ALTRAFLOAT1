@@ -309,11 +309,11 @@ public sealed class FirebaseAuthenticationService
                     .GetDocument($"users/{authUser.Uid}")
                     .GetDocumentSnapshotAsync<Dictionary<string, object>>();
 
-                if (savedProfile.Exists &&
-                    savedProfile.Data is not null &&
-                    savedProfile.Data.TryGetValue("uid", out var savedUid) &&
-                    savedProfile.Data.TryGetValue("role", out var savedRole) &&
-                    savedProfile.Data.TryGetValue(idField, out var savedId) &&
+                var savedData = savedProfile.Data;
+                if (savedData is not null &&
+                    savedData.TryGetValue("uid", out var savedUid) &&
+                    savedData.TryGetValue("role", out var savedRole) &&
+                    savedData.TryGetValue(idField, out var savedId) &&
                     string.Equals(savedUid?.ToString(), authUser.Uid,
                         StringComparison.Ordinal) &&
                     string.Equals(savedRole?.ToString(), expectedRole,
@@ -366,11 +366,12 @@ public sealed class FirebaseAuthenticationService
             .GetDocument($"users/{user.Uid}")
             .GetDocumentSnapshotAsync<Dictionary<string, object>>();
 
-        if (!snapshot.Exists || snapshot.Data is null)
+        var profile = snapshot.Data;
+        if (profile is null)
             throw new InvalidOperationException(
                 "Your account profile could not be found.");
 
-        return snapshot.Data;
+        return profile;
     }
 
     private static void RequireProfileValue(
@@ -391,7 +392,7 @@ public sealed class FirebaseAuthenticationService
     {
         try
         {
-            await SignOutAsync();
+            await CrossFirebaseAuth.Current.SignOutAsync();
         }
         catch
         {
