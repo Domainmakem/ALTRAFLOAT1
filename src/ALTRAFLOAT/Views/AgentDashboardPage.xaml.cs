@@ -46,4 +46,17 @@ public partial class AgentDashboardPage : ContentPage
             _isVerifying = false;
         }
     }
+
+    private async void OnSignOutClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await _authService.SignOutAsync();
+            await Shell.Current.GoToAsync("//LoginPreview");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Sign-out failed", ex.Message, "OK");
+        }
+    }
 }

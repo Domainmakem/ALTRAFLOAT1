@@ -36,6 +36,12 @@ public partial class AgentLoginPage : ContentPage
         LiquidityLoginRequested?.Invoke(this, EventArgs.Empty);
     }
 
+    private void OnPasswordVisibilityClicked(object sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+        PasswordVisibilityButton.Text = PasswordEntry.IsPassword ? "◉" : "◎";
+    }
+
     private async Task OnForgotPasswordClicked()
     {
         var email = EmailEntry.Text;
