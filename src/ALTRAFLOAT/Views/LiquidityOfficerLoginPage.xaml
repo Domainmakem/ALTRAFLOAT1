@@ -2,128 +2,206 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ALTRAFLOAT.Views.LiquidityOfficerLoginPage"
-             BackgroundColor="#443123"
+             BackgroundColor="#FFF9E9"
              Shell.NavBarIsVisible="False">
-
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Color x:Key="AltraBrown">#443123</Color>
-            <Color x:Key="AltraBrownDark">#3D2B20</Color>
-            <Color x:Key="AltraYellow">#FFC400</Color>
-            <Color x:Key="AltraYellowDark">#E6B000</Color>
-            <Color x:Key="AltraCard">#514034</Color>
-            <Color x:Key="AltraCardLight">#F8F5F2</Color>
-            <Color x:Key="AltraWhite">#FFFFFF</Color>
-            <Color x:Key="AltraMuted">#C7BDB5</Color>
-            <Color x:Key="AltraStroke">#665448</Color>
-            <Color x:Key="AltraDarkText">#493629</Color>
-            <Color x:Key="AltraFieldStroke">#E5DFD9</Color>
+            <Color x:Key="Cream">#FFF9E9</Color>
+            <Color x:Key="CreamDark">#F7EAC8</Color>
+            <Color x:Key="Navy">#092A5B</Color>
+            <Color x:Key="NavyLight">#174478</Color>
+            <Color x:Key="Gold">#F2A900</Color>
+            <Color x:Key="GoldSoft">#FFF0C7</Color>
+            <Color x:Key="Ink">#172B49</Color>
+            <Color x:Key="Muted">#6B7890</Color>
+            <Color x:Key="FieldStroke">#E8DDBF</Color>
+            <LinearGradientBrush x:Key="PageBackground" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFFCF3" Offset="0.0" />
+                <GradientStop Color="#F8EBCB" Offset="1.0" />
+            </LinearGradientBrush>
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        <BoxView Color="{StaticResource AltraYellow}" WidthRequest="180" HeightRequest="180"
-                 HorizontalOptions="Start" VerticalOptions="Start"
-                 Rotation="-45" TranslationX="-70" TranslationY="-70" Opacity="0.9"/>
+    <Grid Background="{StaticResource PageBackground}">
+        <BoxView Color="{StaticResource Navy}" WidthRequest="260" HeightRequest="31"
+                 HorizontalOptions="Start" VerticalOptions="Start" Rotation="-38"
+                 TranslationX="-100" TranslationY="38" />
+        <BoxView Color="{StaticResource Gold}" WidthRequest="205" HeightRequest="11"
+                 HorizontalOptions="Start" VerticalOptions="Start" Rotation="-38"
+                 TranslationX="-74" TranslationY="39" />
+        <BoxView Color="{StaticResource Navy}" WidthRequest="270" HeightRequest="30"
+                 HorizontalOptions="End" VerticalOptions="End" Rotation="-38"
+                 TranslationX="105" TranslationY="-44" />
+        <BoxView Color="{StaticResource Gold}" WidthRequest="210" HeightRequest="11"
+                 HorizontalOptions="End" VerticalOptions="End" Rotation="-38"
+                 TranslationX="78" TranslationY="-45" />
+
         <ScrollView>
-            <VerticalStackLayout Padding="24,34,24,28" Spacing="0">
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,18,0,8">
-                    <Image Source="altrafloat_logo.png" WidthRequest="58" HeightRequest="58"
-                           Aspect="AspectFit" VerticalOptions="Center"/>
-                    <VerticalStackLayout Spacing="0" VerticalOptions="Center">
-                        <Label FontSize="27" FontAttributes="Bold">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Altra" TextColor="White"/>
-                                    <Span Text="float" TextColor="{StaticResource AltraYellow}"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Text="Agent &amp; Liquidity Officer Communication"
-                               FontSize="10" TextColor="{StaticResource AltraMuted}"/>
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
-
-                <Border BackgroundColor="White" StrokeThickness="0"
-                        StrokeShape="RoundRectangle 24" Padding="26,28"
-                        Margin="0,26,0,0">
-                    <VerticalStackLayout Spacing="16">
-                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                            <Label Text="Welcome Back" FontSize="25" FontAttributes="Bold"
-                                   TextColor="{StaticResource AltraDarkText}" HorizontalOptions="Center"/>
-                            <Label Text="Sign in to your Altrafloat account" FontSize="13"
-                                   TextColor="#8A7F76" HorizontalOptions="Center"/>
-                        </VerticalStackLayout>
-
-                        <Border BackgroundColor="#F0EDE9" StrokeThickness="0"
-                                StrokeShape="RoundRectangle 24" Padding="4" Margin="0,6,0,2">
-                            <Grid ColumnDefinitions="*,*">
-                                <Button Grid.Column="0" Text="Agent Login"
-                                        BackgroundColor="Transparent"
-                                        TextColor="#5C534C"
-                                        FontAttributes="Bold" FontSize="12"
-                                        CornerRadius="20" HeightRequest="44"
-                                        Clicked="OnAgentTabClicked"/>
-                                <Button Grid.Column="1" Text="Liquidity Officer Login"
-                                        BackgroundColor="{StaticResource AltraBrown}"
-                                        TextColor="{StaticResource AltraYellow}"
-                                        FontAttributes="Bold" FontSize="12"
-                                        CornerRadius="20" HeightRequest="44"
-                                        Clicked="OnLiquidityTabClicked"/>
-                            </Grid>
-                        </Border>
-
-                        <Border Stroke="{StaticResource AltraFieldStroke}" StrokeThickness="1.5"
-                                StrokeShape="RoundRectangle 14" Padding="15,4" BackgroundColor="White">
-                            <VerticalStackLayout Spacing="0">
-                                <Label Text="User Name" FontSize="11" TextColor="#9A9088"/>
-                                <Entry Placeholder="Enter your user name" PlaceholderColor="#C4BDB6"
-                                       TextColor="{StaticResource AltraDarkText}" BackgroundColor="Transparent"
-                                       HeightRequest="38"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Stroke="{StaticResource AltraFieldStroke}" StrokeThickness="1.5"
-                                StrokeShape="RoundRectangle 14" Padding="15,4" BackgroundColor="White">
-                            <VerticalStackLayout Spacing="0">
-                                <Label Text="LO ID" FontSize="11" TextColor="#9A9088"/>
-                                <Entry Placeholder="Example: LO1001" PlaceholderColor="#C4BDB6"
-                                       TextColor="{StaticResource AltraDarkText}" BackgroundColor="Transparent"
-                                       HeightRequest="38"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Stroke="{StaticResource AltraFieldStroke}" StrokeThickness="1.5"
-                                StrokeShape="RoundRectangle 14" Padding="15,4" BackgroundColor="White">
-                            <VerticalStackLayout Spacing="0">
-                                <Label Text="Password" FontSize="11" TextColor="#9A9088"/>
-                                <Entry Placeholder="Enter your password" IsPassword="True"
-                                       PlaceholderColor="#C4BDB6" TextColor="{StaticResource AltraDarkText}"
-                                       BackgroundColor="Transparent" HeightRequest="38"/>
-                            </VerticalStackLayout>
-                        </Border>
-
-                        <Button Text="Login  →" Clicked="OnLoginClicked" BackgroundColor="{StaticResource AltraBrown}"
-                                TextColor="{StaticResource AltraYellow}" FontAttributes="Bold"
-                                FontSize="16" HeightRequest="52" CornerRadius="14" Margin="0,6,0,0"/>
-                        <Label Text="Forgot Password?" TextColor="{StaticResource AltraDarkText}"
-                               FontAttributes="Bold" HorizontalOptions="Center"
-                               TextDecorations="Underline"/>
-                        <Label Text="OR" TextColor="#A89F96" HorizontalOptions="Center" FontSize="12"/>
-                        <Border Stroke="{StaticResource AltraFieldStroke}" StrokeThickness="1.5"
-                                StrokeShape="RoundRectangle 14" Padding="14,14" BackgroundColor="White">
-                            <Label HorizontalOptions="Center">
+            <VerticalStackLayout Padding="20,22,20,22" Spacing="0" HorizontalOptions="Fill">
+                <VerticalStackLayout MaximumWidthRequest="560" Spacing="0" HorizontalOptions="Fill">
+                    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="10"
+                          HorizontalOptions="Center" Margin="0,2,0,14">
+                        <Grid WidthRequest="58" HeightRequest="54" VerticalOptions="Center">
+                            <Border BackgroundColor="{StaticResource Gold}" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 18" WidthRequest="49" HeightRequest="43"
+                                    HorizontalOptions="Center" VerticalOptions="Center"
+                                    TranslationX="4" TranslationY="3" />
+                            <Border BackgroundColor="{StaticResource Navy}" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 18" WidthRequest="49" HeightRequest="43"
+                                    HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="•••" TextColor="White" FontSize="20" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center" TranslationY="-3" />
+                            </Border>
+                        </Grid>
+                        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label FontSize="28" FontAttributes="Bold" TextColor="{StaticResource Navy}">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Don't have an account? " TextColor="#5C534C"/>
-                                        <Span Text="Create Account" TextColor="{StaticResource AltraDarkText}"
-                                              FontAttributes="Bold"/>
+                                        <Span Text="Altra" TextColor="{StaticResource Navy}" />
+                                        <Span Text="float" TextColor="{StaticResource Gold}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                        </Border>
-                    </VerticalStackLayout>
-                </Border>
-                <Label Text="Easy • Secure • Altrafloat" TextColor="{StaticResource AltraMuted}"
-                       HorizontalOptions="Center" FontSize="12" Margin="0,24,0,0"/>
+                            <Label Text="Agent &amp; Liquidity Officer Communication"
+                                   FontSize="9" TextColor="{StaticResource Ink}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Border BackgroundColor="#FFFFFCF5" Stroke="{StaticResource CreamDark}"
+                            StrokeThickness="1" StrokeShape="RoundRectangle 27"
+                            Padding="18,20" MaximumWidthRequest="560">
+                        <Border.Shadow>
+                            <Shadow Brush="#2B092A5B" Offset="0,5" Radius="14" Opacity="0.22" />
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="11">
+                            <VerticalStackLayout Spacing="1" HorizontalOptions="Center" Margin="0,0,0,1">
+                                <Label Text="Welcome Back" FontSize="25" FontAttributes="Bold"
+                                       TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                                <Label Text="Sign in to your Altrafloat account" FontSize="13"
+                                       TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                            <Border BackgroundColor="{StaticResource GoldSoft}" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 24" Padding="4" Margin="0,3,0,1">
+                                <Grid ColumnDefinitions="*,*">
+                                    <Button Grid.Column="0" Text="●  Agent"
+                                            BackgroundColor="Transparent" TextColor="{StaticResource Navy}"
+                                            FontAttributes="Bold" FontSize="13" CornerRadius="20"
+                                            HeightRequest="42" Padding="7,0" Clicked="OnAgentTabClicked" />
+                                    <Button Grid.Column="1" Text="♙  Liquidity Officer"
+                                            BackgroundColor="{StaticResource Navy}" TextColor="White"
+                                            FontAttributes="Bold" FontSize="12" CornerRadius="20"
+                                            HeightRequest="42" Padding="4,0" Clicked="OnLiquidityTabClicked" />
+                                </Grid>
+                            </Border>
+
+                            <Border Stroke="{StaticResource FieldStroke}" StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 15" Padding="12,4" BackgroundColor="#FFFFFEFA">
+                                <Grid ColumnDefinitions="30,*" ColumnSpacing="7">
+                                    <Label Text="●" FontSize="17" TextColor="{StaticResource Navy}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="User Name" FontSize="10" TextColor="{StaticResource Muted}" />
+                                        <Entry x:Name="UsernameEntry" Placeholder="Enter your user name"
+                                               ReturnType="Next" FontSize="14" PlaceholderColor="#8490A3"
+                                               TextColor="{StaticResource Ink}" BackgroundColor="Transparent" HeightRequest="32" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <Border Stroke="{StaticResource FieldStroke}" StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 15" Padding="12,4" BackgroundColor="#FFFFFEFA">
+                                <Grid ColumnDefinitions="30,*" ColumnSpacing="7">
+                                    <Label Text="✉" FontSize="18" TextColor="{StaticResource Navy}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="Email Address" FontSize="10" TextColor="{StaticResource Muted}" />
+                                        <Entry x:Name="EmailEntry" Placeholder="Enter your email address"
+                                               Keyboard="Email" ReturnType="Next" FontSize="14"
+                                               PlaceholderColor="#8490A3" TextColor="{StaticResource Ink}"
+                                               BackgroundColor="Transparent" HeightRequest="32" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <Border Stroke="{StaticResource FieldStroke}" StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 15" Padding="12,4" BackgroundColor="#FFFFFEFA">
+                                <Grid ColumnDefinitions="30,*" ColumnSpacing="7">
+                                    <Label Text="▣" FontSize="18" TextColor="{StaticResource Navy}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="Liquidity Officer ID" FontSize="10" TextColor="{StaticResource Muted}" />
+                                        <Entry x:Name="LiquidityOfficerIdEntry" Placeholder="Example: S1001"
+                                               ReturnType="Next" FontSize="14" PlaceholderColor="#8490A3"
+                                               TextColor="{StaticResource Ink}" BackgroundColor="Transparent" HeightRequest="32" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <Border Stroke="{StaticResource FieldStroke}" StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 15" Padding="12,4" BackgroundColor="#FFFFFEFA">
+                                <Grid ColumnDefinitions="30,*,Auto" ColumnSpacing="7">
+                                    <Label Text="◆" FontSize="16" TextColor="{StaticResource Navy}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="Password" FontSize="10" TextColor="{StaticResource Muted}" />
+                                        <Entry x:Name="PasswordEntry" Placeholder="Enter your password" IsPassword="True"
+                                               ReturnType="Go" FontSize="14" PlaceholderColor="#8490A3"
+                                               TextColor="{StaticResource Ink}" BackgroundColor="Transparent" HeightRequest="32" />
+                                    </VerticalStackLayout>
+                                    <Button x:Name="PasswordVisibilityButton" Grid.Column="2" Text="◉"
+                                            Clicked="OnPasswordVisibilityClicked" BackgroundColor="Transparent"
+                                            TextColor="{StaticResource Navy}" FontSize="18" Padding="5,0"
+                                            WidthRequest="36" HeightRequest="36" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+
+                            <Button Text="Login     →" Clicked="OnLoginClicked"
+                                    BackgroundColor="{StaticResource Navy}" TextColor="White"
+                                    FontAttributes="Bold" FontSize="16" HeightRequest="51"
+                                    CornerRadius="16" Margin="0,2,0,0" />
+                            <Label x:Name="ForgotPasswordLabel" Text="Forgot Password?"
+                                   TextColor="{StaticResource Gold}" FontAttributes="Bold"
+                                   HorizontalOptions="Center" FontSize="13" />
+
+                            <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="11">
+                                <BoxView Color="{StaticResource FieldStroke}" HeightRequest="1" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="OR" TextColor="{StaticResource Muted}"
+                                       HorizontalOptions="Center" FontSize="11" />
+                                <BoxView Grid.Column="2" Color="{StaticResource FieldStroke}" HeightRequest="1" VerticalOptions="Center" />
+                            </Grid>
+
+                            <Border Stroke="{StaticResource FieldStroke}" StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 14" Padding="10,11" BackgroundColor="#FFFFFEFA">
+                                <Label HorizontalOptions="Center" FontSize="12">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Don't have an account? " TextColor="{StaticResource Muted}" />
+                                            <Span x:Name="CreateAccountSpan" Text="Create Account"
+                                                  TextColor="{StaticResource Navy}" FontAttributes="Bold" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="7" Margin="0,13,0,0">
+                        <Label Text="🔒" FontSize="15" VerticalOptions="Center" />
+                        <Label FontSize="12" VerticalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Secure · Reliable · " TextColor="{StaticResource Navy}" />
+                                    <Span Text="Altrafloat" TextColor="{StaticResource Gold}" FontAttributes="Bold" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </HorizontalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto,*" Margin="0,4,0,0" HeightRequest="5">
+                        <BoxView Grid.Column="1" Color="{StaticResource Gold}" WidthRequest="58" HeightRequest="3"
+                                 HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
