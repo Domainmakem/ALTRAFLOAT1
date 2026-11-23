@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ALTRAFLOAT.Views.AgentDashboardPage"
+             BackgroundColor="#FFF9E9"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Cream">#FFF9E9</Color>
+            <Color x:Key="CreamDark">#F7EAC8</Color>
+            <Color x:Key="Navy">#092A5B</Color>
+            <Color x:Key="NavyLight">#174478</Color>
+            <Color x:Key="Gold">#F2A900</Color>
+            <Color x:Key="GoldSoft">#FFF0C7</Color>
+            <Color x:Key="Ink">#172B49</Color>
+            <Color x:Key="Muted">#6B7890</Color>
+            <Color x:Key="Green">#42A65A</Color>
+            <Color x:Key="Card">#FFFFFCF5</Color>
+            <Color x:Key="CardStroke">#E8DDBF</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto" BackgroundColor="{StaticResource Cream}">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="18,12,18,18" Spacing="14" HorizontalOptions="Fill">
+                <VerticalStackLayout MaximumWidthRequest="850" Spacing="14" HorizontalOptions="Fill">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Margin="0,2,0,0">
+                        <Border BackgroundColor="{StaticResource GoldSoft}" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 12" Padding="9,7" VerticalOptions="Center">
+                            <Label Text="☰" FontSize="19" TextColor="{StaticResource Navy}" />
+                        </Border>
+                        <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center"
+                                               Spacing="7" VerticalOptions="Center">
+                            <Grid WidthRequest="38" HeightRequest="36">
+                                <Border BackgroundColor="{StaticResource Gold}" StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 13" WidthRequest="33" HeightRequest="29"
+                                        TranslationX="3" TranslationY="2" />
+                                <Border BackgroundColor="{StaticResource Navy}" StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 13" WidthRequest="33" HeightRequest="29">
+                                    <Label Text="•••" FontSize="14" FontAttributes="Bold" TextColor="White"
+                                           HorizontalOptions="Center" VerticalOptions="Center" TranslationY="-2" />
+                                </Border>
+                            </Grid>
+                            <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                <Label FontSize="19" FontAttributes="Bold">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Altra" TextColor="{StaticResource Navy}" />
+                                            <Span Text="float" TextColor="{StaticResource Gold}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="Agent &amp; Liquidity Officer Communication"
+                                       FontSize="7" TextColor="{StaticResource Muted}" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Button Grid.Column="2" Text="Sign Out" Clicked="OnSignOutClicked"
+                                BackgroundColor="Transparent" TextColor="{StaticResource Navy}"
+                                BorderColor="{StaticResource Gold}" BorderWidth="1.2"
+                                FontSize="11" FontAttributes="Bold" CornerRadius="13"
+                                Padding="10,4" HeightRequest="36" VerticalOptions="Center" />
+                    </Grid>
+
+                    <Border BackgroundColor="{StaticResource Card}" Stroke="{StaticResource CardStroke}"
+                            StrokeThickness="1" StrokeShape="RoundRectangle 22" Padding="15,13">
+                        <Border.Shadow>
+                            <Shadow Brush="#22092A5B" Offset="0,3" Radius="9" Opacity="0.16" />
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border BackgroundColor="{StaticResource GoldSoft}" StrokeThickness="0"
+                                    WidthRequest="56" HeightRequest="56" StrokeShape="RoundRectangle 28"
+                                    VerticalOptions="Center">
+                                <Label x:Name="AvatarInitialsLabel" Text="" FontSize="19" FontAttributes="Bold"
+                                       TextColor="{StaticResource Navy}" HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                <Label x:Name="GreetingLabel" Text="Good morning," FontSize="11"
+                                       TextColor="{StaticResource Muted}" />
+                                <Label x:Name="AgentNameLabel" Text="" FontSize="18" FontAttributes="Bold"
+                                       TextColor="{StaticResource Navy}" />
+                                <Label x:Name="AgentIdLabel" Text="" FontSize="11" TextColor="{StaticResource Muted}" />
+                                <Label x:Name="AgentCategoryLabel" Text="" FontSize="11" FontAttributes="Bold"
+                                       TextColor="{StaticResource Gold}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" BackgroundColor="{StaticResource Navy}" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 15" Padding="10,6" VerticalOptions="Center">
+                                <Label Text="AGENT" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource GoldSoft}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Border BackgroundColor="{StaticResource GoldSoft}" Stroke="{StaticResource CreamDark}"
+                            StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15,13">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="11">
+                            <Border BackgroundColor="{StaticResource Card}" StrokeThickness="0"
+                                    WidthRequest="46" HeightRequest="46" StrokeShape="RoundRectangle 23"
+                                    VerticalOptions="Center">
+                                <Label Text="♟" FontSize="23" TextColor="{StaticResource Navy}"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                <Label Text="Available Liquidity Officers" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{StaticResource Navy}" />
+                                <Label x:Name="LoCountLabel" Text="Loading…" FontSize="12"
+                                       FontAttributes="Bold" TextColor="{StaticResource NavyLight}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="›" FontSize="27" TextColor="{StaticResource Navy}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+                        <Border BackgroundColor="{StaticResource Card}" Stroke="{StaticResource CardStroke}"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 15" Padding="5,8">
+                            <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                                <Label Text="●" FontSize="20" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                                <Label Text="Chat" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Card}" Stroke="{StaticResource CardStroke}"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 15" Padding="5,8">
+                            <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                                <Label Text="◷" FontSize="20" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                                <Label Text="History" FontSize="10" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource Card}" Stroke="{StaticResource CardStroke}"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 15" Padding="5,8">
+                            <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                                <Label Text="●" FontSize="20" TextColor="{StaticResource Gold}" HorizontalOptions="Center" />
+                                <Label Text="Profile" FontSize="10" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="3" BackgroundColor="{StaticResource Card}" Stroke="{StaticResource CardStroke}"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 15" Padding="5,8">
+                            <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                                <Label Text="⚙" FontSize="20" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                                <Label Text="Settings" FontSize="10" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,2,0,0">
+                        <Label Text="Available LOs" FontSize="17" FontAttributes="Bold"
+                               TextColor="{StaticResource Navy}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="View All  ›" FontSize="11" FontAttributes="Bold"
+                               TextColor="{StaticResource Gold}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <ActivityIndicator x:Name="LoadingIndicator" IsRunning="True" IsVisible="True"
+                                       Color="{StaticResource Gold}" HeightRequest="34" />
+                    <Label x:Name="NoLosLabel"
+                           Text="No Liquidity Officers are currently available in the directory."
+                           TextColor="{StaticResource Muted}" FontSize="12" HorizontalOptions="Center"
+                           IsVisible="False" Margin="0,5,0,0" />
+
+                    <CollectionView x:Name="LosCollectionView" IsVisible="False" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BackgroundColor="{StaticResource Card}" Stroke="{StaticResource CardStroke}"
+                                        StrokeThickness="1" StrokeShape="RoundRectangle 17"
+                                        Padding="12,10" Margin="0,0,0,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=OpenChatCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                        <Border BackgroundColor="{StaticResource GoldSoft}" StrokeThickness="0"
+                                                WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22">
+                                            <Label Text="{Binding Initials}" FontSize="14" FontAttributes="Bold"
+                                                   TextColor="{StaticResource Navy}" HorizontalOptions="Center"
+                                                   VerticalOptions="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                            <HorizontalStackLayout Spacing="5">
+                                                <Label Text="{Binding Username}" FontSize="13" FontAttributes="Bold"
+                                                       TextColor="{StaticResource Navy}" />
+                                                <Border BackgroundColor="{StaticResource GoldSoft}" StrokeThickness="0"
+                                                        StrokeShape="RoundRectangle 9" Padding="5,1">
+                                                    <Label Text="L.O." FontSize="9" FontAttributes="Bold"
+                                                           TextColor="{StaticResource Navy}" />
+                                                </Border>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout Spacing="4">
+                                                <Label Text="●" FontSize="9" TextColor="{StaticResource Green}" />
+                                                <Label Text="Liquidity Officer" FontSize="10" TextColor="{StaticResource Muted}" />
+                                                <Label Text="·" FontSize="10" TextColor="{StaticResource Muted}" />
+                                                <Label Text="{Binding LoId}" FontSize="10" TextColor="{StaticResource Muted}" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="2" BackgroundColor="{StaticResource Navy}" StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 13" Padding="11,7" VerticalOptions="Center">
+                                            <Label Text="Chat  ›" FontSize="10" FontAttributes="Bold"
+                                                   TextColor="{StaticResource GoldSoft}" />
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="1" BackgroundColor="{StaticResource Card}" Stroke="{StaticResource CardStroke}"
+                StrokeThickness="1" Padding="0,8,0,9">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="18,18,0,0" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" MaximumWidthRequest="850" HorizontalOptions="Fill" Margin="12,0">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                    <Label Text="⌂" FontSize="20" TextColor="{StaticResource Gold}" HorizontalOptions="Center" />
+                    <Label Text="Home" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                    <BoxView Color="{StaticResource Gold}" HeightRequest="2" WidthRequest="26" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
+                    <Label Text="▤" FontSize="19" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                    <Label Text="Requests" FontSize="10" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                    <Label Text="●" FontSize="19" TextColor="{StaticResource Navy}" HorizontalOptions="Center" />
+                    <Label Text="Chat" FontSize="10" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="2">
+                    <Label Text="•••" FontSize="18" TextColor="{StaticResource NavyLight}" HorizontalOptions="Center" />
+                    <Label Text="More" FontSize="10" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
