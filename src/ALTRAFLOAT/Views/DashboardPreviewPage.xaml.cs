@@ -1,3 +1,6 @@
+using ALTRAFLOAT.Services;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace ALTRAFLOAT.Views;
 
 public partial class DashboardPreviewPage : ContentPage
@@ -9,12 +12,16 @@ public partial class DashboardPreviewPage : ContentPage
     {
         InitializeComponent();
 
-        var agentPage = new AgentDashboardPage();
+        var services = Application.Current?.Handler?.MauiContext?.Services
+            ?? throw new InvalidOperationException("Application services are unavailable.");
+        var authService = services.GetRequiredService<FirebaseAuthenticationService>();
+
+        var agentPage = new AgentDashboardPage(authService);
         _agentDashboard = agentPage.Content
             ?? throw new InvalidOperationException("Agent dashboard content is missing.");
         agentPage.Content = null;
 
-        var liquidityPage = new LiquidityOfficerDashboardPage();
+        var liquidityPage = new LiquidityOfficerDashboardPage(authService);
         _liquidityDashboard = liquidityPage.Content
             ?? throw new InvalidOperationException("Liquidity Officer dashboard content is missing.");
         liquidityPage.Content = null;

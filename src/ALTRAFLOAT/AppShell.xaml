@@ -9,6 +9,6 @@
     <ShellContent
         Title="Login"
         Route="LoginPreview"
-        ContentTemplate="{DataTemplate views:LoginPreviewPage}"/>
+        x:Name="LoginShellContent"/>
 
 </Shell>
