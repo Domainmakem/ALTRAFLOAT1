@@ -31,7 +31,7 @@ service cloud.firestore {
         && request.resource.data.role == 'agent'
         && request.resource.data.accountStatus == 'active'
         && request.resource.data.agentId.matches(
-          '^[A-Z][A-Z0-9_-]*$'
+          '^[ABD-RT-Z][0-9]+$'
         )
         && request.resource.data.agentCategory in [
           'Main Agent',
@@ -90,7 +90,7 @@ service cloud.firestore {
       allow read: if false;
 
       allow create: if signedIn()
-        && agentId.matches('^[A-Z][A-Z0-9_-]*$')
+        && agentId.matches('^[ABD-RT-Z][0-9]+$')
         && request.resource.data.keys().hasAll([
           'uid', 'reserved', 'createdAt'
         ])

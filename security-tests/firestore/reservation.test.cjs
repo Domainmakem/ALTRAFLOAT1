@@ -188,7 +188,22 @@ async function attemptAgentRegistration(
 
 test("Agent registration accepts a valid Agent profile", async () => {
   await assertSucceeds(
-    attemptAgentRegistration("agent1", "agent@gmail.com", "G12345")
+    attemptAgentRegistration("agent1", "agent@gmail.com", "A1001")
+  );
+});
+
+test("Agent registration accepts a non-S/C alphabetic prefix and digits", async () => {
+  await assertSucceeds(
+    attemptAgentRegistration("agent2", "agent2@gmail.com", "B2500")
+  );
+});
+
+test("Agent registration rejects Agent IDs starting with S or C", async () => {
+  await assertFails(
+    attemptAgentRegistration("agent_s", "agents@gmail.com", "S1001")
+  );
+  await assertFails(
+    attemptAgentRegistration("agent_c", "agentc@gmail.com", "C2500")
   );
 });
 
@@ -213,6 +228,18 @@ test("Agent registration rejects Agent ID containing spaces", async () => {
 test("Agent registration rejects Agent ID with invalid punctuation", async () => {
   await assertFails(
     attemptAgentRegistration("agent1", "agent1@gmail.com", "AGENT@123")
+  );
+});
+
+test("Agent registration rejects a letter after the first character", async () => {
+  await assertFails(
+    attemptAgentRegistration("agent_letters", "letters@gmail.com", "AB123")
+  );
+});
+
+test("Agent registration rejects a prefix without following digits", async () => {
+  await assertFails(
+    attemptAgentRegistration("agent_nodigits", "nodigitsagent@gmail.com", "A")
   );
 });
 
@@ -255,6 +282,12 @@ test("Agent registration rejects incorrect category capitalization", async () =>
 test("LO registration accepts lowercase Gmail address", async () => {
   await assertSucceeds(
     attemptLORegistration("lo1", "officer@gmail.com", "S123456")
+  );
+});
+
+test("LO registration accepts both S and C prefixes followed by digits", async () => {
+  await assertSucceeds(
+    attemptLORegistration("lo_c", "officerc@gmail.com", "C2500")
   );
 });
 
@@ -342,6 +375,18 @@ test("Agent registration rejects a reservation owned by another UID", async () =
   );
 });
 
+test("Agent ID already reserved by another user cannot be claimed", async () => {
+  await env.withSecurityRulesDisabled(async (context) => {
+    await setDoc(doc(context.firestore(), "agentIds", "A1001"), {
+      uid: "existing_agent", reserved: true
+    });
+  });
+
+  await assertFails(
+    attemptAgentRegistration("claim_agent", "claimagent@gmail.com", "A1001")
+  );
+});
+
 test("Agent registration rejects a reservation with reserved set to false", async () => {
   await assertFails(
     attemptAgentRegistration(
@@ -408,6 +453,18 @@ test("LO registration rejects a reservation owned by another UID", async () => {
       "lo_res_owner", "loresowner@gmail.com", "S45674",
       {}, { uid: "another_user" }
     )
+  );
+});
+
+test("LO ID already reserved by another user cannot be claimed", async () => {
+  await env.withSecurityRulesDisabled(async (context) => {
+    await setDoc(doc(context.firestore(), "liquidityOfficerIds", "C2500"), {
+      uid: "existing_lo", reserved: true
+    });
+  });
+
+  await assertFails(
+    attemptLORegistration("claim_lo", "claimlo@gmail.com", "C2500")
   );
 });
 

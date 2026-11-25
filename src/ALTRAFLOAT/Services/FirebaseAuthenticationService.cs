@@ -78,7 +78,7 @@ public sealed class FirebaseAuthenticationService
     {
         ValidateRegistration(email, password, username);
 
-        if (!Regex.IsMatch(agentId.Trim(), "^[A-Z][A-Z0-9_-]*$"))
+        if (!Regex.IsMatch(agentId.Trim(), "^[ABD-RT-Z][0-9]+$"))
             throw new ArgumentException("Enter a valid Agent ID.");
 
         if (!AgentCategories.Contains(agentCategory.Trim()))
