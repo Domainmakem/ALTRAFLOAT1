@@ -100,7 +100,7 @@
                                 <Grid ColumnDefinitions="30,*" ColumnSpacing="7">
                                     <Label Text="●" FontSize="17" TextColor="{StaticResource Navy}"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
                                         <Label Text="User Name" FontSize="10" TextColor="{StaticResource Muted}" />
                                         <Entry x:Name="UsernameEntry" Placeholder="Enter your user name"
                                                ReturnType="Next" FontSize="14" PlaceholderColor="#8490A3"
@@ -114,7 +114,7 @@
                                 <Grid ColumnDefinitions="30,*" ColumnSpacing="7">
                                     <Label Text="✉" FontSize="18" TextColor="{StaticResource Navy}"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
                                         <Label Text="Email Address" FontSize="10" TextColor="{StaticResource Muted}" />
                                         <Entry x:Name="EmailEntry" Placeholder="Enter your email address"
                                                Keyboard="Email" ReturnType="Next" FontSize="14"
@@ -129,7 +129,7 @@
                                 <Grid ColumnDefinitions="30,*" ColumnSpacing="7">
                                     <Label Text="▣" FontSize="18" TextColor="{StaticResource Navy}"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
                                         <Label Text="Liquidity Officer ID" FontSize="10" TextColor="{StaticResource Muted}" />
                                         <Entry x:Name="LiquidityOfficerIdEntry" Placeholder="Example: S1001"
                                                ReturnType="Next" FontSize="14" PlaceholderColor="#8490A3"
@@ -143,7 +143,7 @@
                                 <Grid ColumnDefinitions="30,*,Auto" ColumnSpacing="7">
                                     <Label Text="◆" FontSize="16" TextColor="{StaticResource Navy}"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
-                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
                                         <Label Text="Password" FontSize="10" TextColor="{StaticResource Muted}" />
                                         <Entry x:Name="PasswordEntry" Placeholder="Enter your password" IsPassword="True"
                                                ReturnType="Go" FontSize="14" PlaceholderColor="#8490A3"
@@ -156,13 +156,15 @@
                                 </Grid>
                             </Border>
 
-                            <Button Text="Login     →" Clicked="OnLoginClicked"
+                            <Button x:Name="LoginButton" Text="Login     →" Clicked="OnLoginClicked"
                                     BackgroundColor="{StaticResource Navy}" TextColor="White"
                                     FontAttributes="Bold" FontSize="16" HeightRequest="51"
                                     CornerRadius="16" Margin="0,2,0,0" />
+                            <ActivityIndicator x:Name="LoginActivityIndicator" IsVisible="False" IsRunning="False" Color="{StaticResource Navy}" HeightRequest="24" />
                             <Label x:Name="ForgotPasswordLabel" Text="Forgot Password?"
                                    TextColor="{StaticResource Gold}" FontAttributes="Bold"
                                    HorizontalOptions="Center" FontSize="13" />
+                            <ActivityIndicator x:Name="ResetActivityIndicator" IsVisible="False" IsRunning="False" Color="{StaticResource Navy}" HeightRequest="24" />
 
                             <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="11">
                                 <BoxView Color="{StaticResource FieldStroke}" HeightRequest="1" VerticalOptions="Center" />

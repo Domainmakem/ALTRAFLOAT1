@@ -40,7 +40,7 @@ public partial class LiquidityOfficerCreateAccountPage : ContentPage
                 // Registration has already succeeded.
             }
 
-            await DisplayAlert(
+            await Shell.Current.DisplayAlert(
                 "Registration submitted",
                 "Your Liquidity Officer account has been created and is awaiting administrator approval.",
                 "OK");
@@ -49,7 +49,8 @@ public partial class LiquidityOfficerCreateAccountPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Registration failed", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Registration failed",
+                FirebaseAuthenticationService.GetUserFriendlyError(ex), "OK");
         }
         finally
         {

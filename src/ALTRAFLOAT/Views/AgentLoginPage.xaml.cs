@@ -8,6 +8,8 @@ public partial class AgentLoginPage : ContentPage
     public event EventHandler? CreateAccountRequested;
 
     private readonly FirebaseAuthenticationService _authService;
+    private bool _loginInProgress;
+    private bool _resetInProgress;
 
     public AgentLoginPage(FirebaseAuthenticationService authService)
     {
@@ -44,38 +46,56 @@ public partial class AgentLoginPage : ContentPage
 
     private async Task OnForgotPasswordClicked()
     {
-        var email = EmailEntry.Text;
-
-        if (string.IsNullOrWhiteSpace(email))
-        {
-            email = await DisplayPromptAsync(
-                "Reset password",
-                "Enter your account email address.",
-                "Continue",
-                "Cancel",
-                "Email address",
-                keyboard: Keyboard.Email);
-        }
-
-        if (string.IsNullOrWhiteSpace(email))
+        if (_resetInProgress)
             return;
 
+        _resetInProgress = true;
         try
         {
+            var email = EmailEntry.Text;
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                email = await Shell.Current.DisplayPromptAsync(
+                    "Reset password",
+                    "Enter your account email address.",
+                    "Continue",
+                    "Cancel",
+                    "Email address",
+                    keyboard: Keyboard.Email);
+            }
+
+            if (string.IsNullOrWhiteSpace(email))
+                return;
+
+            ForgotPasswordLabel.IsEnabled = false;
+            ResetActivityIndicator.IsVisible = ResetActivityIndicator.IsRunning = true;
             await _authService.SendPasswordResetEmailAsync(email.Trim());
-            await DisplayAlert(
+            await Shell.Current.DisplayAlert(
                 "Password reset",
                 "If the account is registered, a password reset email will be sent.",
                 "OK");
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Password reset failed", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Password reset failed",
+                FirebaseAuthenticationService.GetUserFriendlyError(ex), "OK");
+        }
+        finally
+        {
+            _resetInProgress = false;
+            ForgotPasswordLabel.IsEnabled = true;
+            ResetActivityIndicator.IsVisible = ResetActivityIndicator.IsRunning = false;
         }
     }
 
     private async void OnLoginClicked(object sender, EventArgs e)
     {
+        if (_loginInProgress)
+            return;
+
+        _loginInProgress = true;
+        LoginButton.IsEnabled = false;
+        LoginActivityIndicator.IsVisible = LoginActivityIndicator.IsRunning = true;
         try
         {
             await _authService.SignInAgentAsync(
@@ -89,7 +109,14 @@ public partial class AgentLoginPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Login failed", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Login failed",
+                FirebaseAuthenticationService.GetUserFriendlyError(ex), "OK");
+        }
+        finally
+        {
+            _loginInProgress = false;
+            LoginButton.IsEnabled = true;
+            LoginActivityIndicator.IsVisible = LoginActivityIndicator.IsRunning = false;
         }
     }
 }

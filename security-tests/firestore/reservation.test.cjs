@@ -495,3 +495,58 @@ test("LO ID reservation cannot be deleted", async () => {
     deleteDoc(doc(dbFor("lo1"), "liquidityOfficerIds", "S45680"))
   );
 });
+
+test("Active directory list includes an entry with no LO profile", async () => {
+  await seedAgent();
+  await seedDirectory("missingLO", "Officer", "S012345", "active");
+
+  const result = await assertSucceeds(getDocs(query(
+    collection(dbFor("agent1"), "liquidityOfficerDirectory"),
+    where("status", "==", "active")
+  )));
+  if (!result.docs.some(d => d.id === "missingLO")) {
+    throw new Error("Active directory entry was not listed.");
+  }
+});
+
+test("Active directory list includes a pending LO entry if owner leaves it active", async () => {
+  await seedAgent();
+  await seedUser("pendingLO", {
+    uid: "pendingLO",
+    username: "Officer",
+    email: "pendingLO@gmail.com",
+    role: "liquidityOfficer",
+    approvalStatus: "pending",
+    accountStatus: "pending"
+  });
+  await seedDirectory("pendingLO", "Officer", "S012345", "active");
+
+  const result = await assertSucceeds(getDocs(query(
+    collection(dbFor("agent1"), "liquidityOfficerDirectory"),
+    where("status", "==", "active")
+  )));
+  if (!result.docs.some(d => d.id === "pendingLO")) {
+    throw new Error("Active directory entry was not listed.");
+  }
+});
+
+test("Active directory list includes a suspended LO entry if owner leaves it active", async () => {
+  await seedAgent();
+  await seedUser("suspendedLO", {
+    uid: "suspendedLO",
+    username: "Officer",
+    email: "suspendedLO@gmail.com",
+    role: "liquidityOfficer",
+    approvalStatus: "approved",
+    accountStatus: "suspended"
+  });
+  await seedDirectory("suspendedLO", "Officer", "S012345", "active");
+
+  const result = await assertSucceeds(getDocs(query(
+    collection(dbFor("agent1"), "liquidityOfficerDirectory"),
+    where("status", "==", "active")
+  )));
+  if (!result.docs.some(d => d.id === "suspendedLO")) {
+    throw new Error("Active directory entry was not listed.");
+  }
+});

@@ -35,7 +35,7 @@ public partial class AgentCreateAccountPage : ContentPage
             try { await _authService.SignOutAsync(); }
             catch { /* Registration has already succeeded. */ }
 
-            await DisplayAlert(
+            await Shell.Current.DisplayAlert(
                 "Account created",
                 "Your Agent account has been created. You can now sign in.",
                 "OK");
@@ -44,7 +44,8 @@ public partial class AgentCreateAccountPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Registration failed", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Registration failed",
+                FirebaseAuthenticationService.GetUserFriendlyError(ex), "OK");
         }
         finally
         {

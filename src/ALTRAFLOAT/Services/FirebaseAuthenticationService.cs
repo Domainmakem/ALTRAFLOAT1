@@ -6,6 +6,52 @@ namespace ALTRAFLOAT.Services;
 
 public sealed class FirebaseAuthenticationService
 {
+    private const string PasswordRequirementsMessage =
+        "Password must be at least 6 characters and include at least one uppercase letter, one lowercase letter, and one number. Special characters are optional.";
+
+    public static string GetUserFriendlyError(Exception exception)
+    {
+        var message = exception.ToString().ToLowerInvariant();
+
+        if (message.Contains("weak-password") || message.Contains("weak_password") ||
+            message.Contains("weak password") ||
+            message.Contains("password-does-not-meet-requirements") ||
+            message.Contains("password_does_not_meet_requirements") ||
+            message.Contains("password does not meet requirements") ||
+            message.Contains("password-policy") || message.Contains("password policy") ||
+            message.Contains("password_policy") ||
+            message.Contains("password should be at least") ||
+            message.Contains("password is too short"))
+            return PasswordRequirementsMessage;
+
+        if (exception is ArgumentException)
+            return exception.Message;
+        if (exception is InvalidOperationException &&
+            (exception.Message.StartsWith("Your Liquidity Officer account is pending", StringComparison.Ordinal) ||
+             exception.Message.StartsWith("Your Liquidity Officer application was not approved", StringComparison.Ordinal) ||
+             exception.Message.StartsWith("Your Liquidity Officer account is suspended", StringComparison.Ordinal) ||
+             exception.Message.StartsWith("Your account ", StringComparison.Ordinal) ||
+             exception.Message.StartsWith("Agent ", StringComparison.Ordinal) ||
+             exception.Message.StartsWith("Liquidity Officer ", StringComparison.Ordinal) ||
+             exception.Message.StartsWith("Registration ", StringComparison.Ordinal)))
+            return exception.Message;
+
+        if (message.Contains("email-already-in-use") || message.Contains("email already in use"))
+            return "An account could not be created with those details. If you already have an account, sign in or reset your password.";
+        if (message.Contains("invalid-email") || message.Contains("invalid email"))
+            return "Enter a valid email address.";
+        if (message.Contains("wrong-password") || message.Contains("user-not-found") || message.Contains("invalid-credential") || message.Contains("invalid login credentials"))
+            return "The email or password could not be verified. Check your details and try again.";
+        if (message.Contains("too-many-requests") || message.Contains("too many requests"))
+            return "There have been too many attempts. Wait a little while and try again.";
+        if (message.Contains("network-request-failed") || message.Contains("network error") || message.Contains("unreachable"))
+            return "A network error prevented the request. Check your connection and try again.";
+        if (message.Contains("operation-not-allowed"))
+            return "This sign-in method is currently unavailable. Contact support for help.";
+
+        return "We couldn't complete your request. Check your connection and details, then try again.";
+    }
+
     private static readonly HashSet<string> AgentCategories =
     [
         "Main Agent",
@@ -16,6 +62,7 @@ public sealed class FirebaseAuthenticationService
     public async Task CreateAccountAsync(string email, string password)
     {
         ValidateCredentials(email, password);
+        ValidatePasswordRequirements(password);
 
         await CrossFirebaseAuth.Current
             .CreateUserAsync(email.Trim(), password);
@@ -162,6 +209,18 @@ public sealed class FirebaseAuthenticationService
 
             var profile = await GetCurrentUserProfileAsync();
 
+            var approvalStatus = profile.GetValueOrDefault("approvalStatus")?.ToString();
+            var accountStatus = profile.GetValueOrDefault("accountStatus")?.ToString();
+            if (IsStatus(approvalStatus, "pending") || IsStatus(accountStatus, "pending"))
+                throw new InvalidOperationException(
+                    "Your Liquidity Officer account is pending administrator approval. You can sign in after it has been approved.");
+            if (IsStatus(approvalStatus, "rejected") || IsStatus(accountStatus, "rejected"))
+                throw new InvalidOperationException(
+                    "Your Liquidity Officer application was not approved. Contact an administrator for assistance.");
+            if (IsStatus(approvalStatus, "suspended") || IsStatus(accountStatus, "suspended"))
+                throw new InvalidOperationException(
+                    "Your Liquidity Officer account is suspended. Contact an administrator for assistance.");
+
             RequireProfileValue(profile, "uid",
                 CrossFirebaseAuth.Current.CurrentUser!.Uid);
             RequireProfileValue(profile, "email", email.Trim(),
@@ -260,9 +319,23 @@ public sealed class FirebaseAuthenticationService
         ValidateCredentials(email, password);
         ValidateRequired(username, "Enter your username.");
 
+        ValidatePasswordRequirements(password);
+    }
+
+    private static void ValidatePasswordRequirements(string password)
+    {
         if (password.Length < 6)
             throw new ArgumentException(
                 "Your password must contain at least 6 characters.");
+        if (!password.Any(char.IsUpper))
+            throw new ArgumentException(
+                "Your password must contain at least one uppercase letter.");
+        if (!password.Any(char.IsLower))
+            throw new ArgumentException(
+                "Your password must contain at least one lowercase letter.");
+        if (!password.Any(char.IsDigit))
+            throw new ArgumentException(
+                "Your password must contain at least one number.");
     }
 
     private static async Task CreateAccountAndCommitAsync(
@@ -405,6 +478,9 @@ public sealed class FirebaseAuthenticationService
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException(message);
     }
+
+    private static bool IsStatus(string? actual, string expected) =>
+        string.Equals(actual, expected, StringComparison.OrdinalIgnoreCase);
 
     private static void ValidateCredentials(string email, string password)
     {

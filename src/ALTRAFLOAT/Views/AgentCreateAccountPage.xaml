@@ -217,7 +217,7 @@
                                         <Label Text="Password" FontSize="10"
                                                TextColor="{StaticResource Muted}" />
                                         <Entry x:Name="PasswordEntry"
-                                               Placeholder="At least 6 characters"
+                                               Placeholder="Create a password"
                                                IsPassword="True" ReturnType="Go"
                                                FontSize="14" PlaceholderColor="#8490A3"
                                                TextColor="{StaticResource Ink}"
@@ -226,6 +226,10 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
+
+                            <Label Text="At least 6 characters, with an uppercase letter, a lowercase letter, and a number. Special characters are optional."
+                                   FontSize="11" TextColor="{StaticResource Muted}"
+                                   Margin="4,-5,0,0" />
 
                             <Button x:Name="CreateButton" Text="Create Account     →"
                                     Clicked="OnCreateAccountClicked"
